@@ -2,6 +2,11 @@ server:
   servlet:
     context-path: /bcnc-test
 
+logging:
+  level:
+    com.bcnc.test.infrastructure.*: INFO
+    com.bcnc.test.infrastructure.api.*: DEBUG
+
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
