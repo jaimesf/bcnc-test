@@ -2,7 +2,6 @@ package com.bcnc.test.infrastructure.repository;
 
 import com.bcnc.test.application.repository.PriceRepository;
 import com.bcnc.test.domain.model.PriceDomain;
-import com.bcnc.test.infrastructure.entity.PriceEntity;
 import com.bcnc.test.infrastructure.mapper.PriceMapper;
 import com.bcnc.test.infrastructure.repository.jpa.JpaPriceRepository;
 import java.time.LocalDateTime;
@@ -37,10 +36,9 @@ public class PriceRepositoryImpl implements PriceRepository {
    */
   @Override
   public Optional<PriceDomain> findPrice(Integer brandId, Integer productId, LocalDateTime date) {
-    Optional<PriceEntity> priceEntity =
-        jpaPriceRepository
-            .findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-                brandId, productId, date, date);
-    return priceEntity.map(priceMapper::toDomain);
+    return jpaPriceRepository
+        .findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+            brandId, productId, date, date)
+        .map(priceMapper::toDomain);
   }
 }

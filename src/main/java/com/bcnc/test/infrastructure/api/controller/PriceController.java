@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>This controller exposes an endpoint to find the applicable price for a product based on the
  * brand, product, and a specific date.
  */
+@Slf4j
 @RestController
 @RequestMapping("/prices")
 @RequiredArgsConstructor
@@ -67,6 +69,8 @@ public class PriceController {
           @RequestParam
           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
           LocalDateTime date) {
+    log.debug(
+        "Request received for brandId: {}, productId: {}, date: {}", brandId, productId, date);
     return priceService
         .findPrice(brandId, productId, date)
         .map(priceResponseMapper::toResponse)
