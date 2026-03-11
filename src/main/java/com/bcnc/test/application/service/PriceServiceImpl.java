@@ -4,7 +4,6 @@ import com.bcnc.test.application.repository.PriceRepository;
 import com.bcnc.test.domain.model.PriceDomain;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -34,7 +34,8 @@ class PriceControllerTest {
     Integer brandId = 1;
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
-    PriceDomain priceDomain = new PriceDomain();
+    PriceDomain priceDomain =
+        new PriceDomain(1L, brandId, date, date, 1, productId, 1, 35.50, "EUR");
     PriceResponse priceResponse = new PriceResponse(productId, brandId, 1, date, date, 35.50);
     when(priceService.findPrice(brandId, productId, date)).thenReturn(Optional.of(priceDomain));
     when(priceResponseMapper.toResponse(priceDomain)).thenReturn(priceResponse);
@@ -43,8 +44,8 @@ class PriceControllerTest {
 
     assertEquals(HttpStatus.OK, result.getStatusCode());
     assertEquals(priceResponse, result.getBody());
-    assertEquals(brandId, result.getBody().getBrandId());
-    assertEquals(productId, result.getBody().getProductId());
+    assertEquals(brandId, result.getBody().brandId());
+    assertEquals(productId, result.getBody().productId());
   }
 
   @Test

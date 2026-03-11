@@ -8,7 +8,6 @@ import com.bcnc.test.application.repository.PriceRepository;
 import com.bcnc.test.domain.model.PriceDomain;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,15 +30,16 @@ class PriceServiceImplTest {
     Integer brandId = 1;
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
-    PriceDomain priceDomain = new PriceDomain(1L, brandId, date, date, 1, productId, 1, 35.50, "EUR");
+    PriceDomain priceDomain =
+        new PriceDomain(1L, brandId, date, date, 1, productId, 1, 35.50, "EUR");
     when(priceRepository.findPrice(brandId, productId, date)).thenReturn(Optional.of(priceDomain));
 
     Optional<PriceDomain> result = priceService.findPrice(brandId, productId, date);
 
     assertTrue(result.isPresent());
     assertEquals(priceDomain, result.get());
-    assertEquals(brandId, result.get().getBrandId());
-    assertEquals(productId, result.get().getProductId());
+    assertEquals(brandId, result.get().brandId());
+    assertEquals(productId, result.get().productId());
   }
 
   /** Test find price when not found. */

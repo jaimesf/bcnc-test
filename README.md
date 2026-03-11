@@ -13,8 +13,8 @@ This is a REST service that provides a priceDomain query endpoint. It allows you
 
 ## Prerequisites
 
-- Java 21
-- Maven 3.8.x
+- Java 25
+- Maven 3.9.x
 
 ## Build and Run
 
@@ -102,7 +102,7 @@ mvn spotless:apply
 
 ## Technologies Used
 
--   **Java 21**
+-   **Java 25**
 -   **Spring Boot 3.5.11**
 -   **Maven**
 -   **H2 Database**
@@ -110,7 +110,7 @@ mvn spotless:apply
 -   **Mockito**
 -   **MapStruct 1.6.3**
 -   **Springdoc (Swagger UI) 2.8.16**
--   **Spotless 3.2.0**
+-   **Spotless 3.3.0**
 -   **Lombok 1.18.42**
 
 ## Testing

@@ -33,7 +33,8 @@ class PriceRepositoryImplTest {
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
     PriceEntity priceEntity = new PriceEntity();
-    PriceDomain priceDomain = new PriceDomain();
+    PriceDomain priceDomain =
+        new PriceDomain(1L, brandId, date, date, 1, productId, 1, 35.50, "EUR");
 
     when(jpaPriceRepository
             .findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
@@ -43,7 +44,10 @@ class PriceRepositoryImplTest {
 
     Optional<PriceDomain> result = priceRepository.findPrice(brandId, productId, date);
 
-    assertEquals(Optional.of(priceDomain), result);
+    assertTrue(result.isPresent());
+    assertEquals(priceDomain, result.get());
+    assertEquals(brandId, result.get().brandId());
+    assertEquals(productId, result.get().productId());
   }
 
   @Test

@@ -1,7 +1,6 @@
 package com.bcnc.test.application.service;
 
 import com.bcnc.test.domain.model.PriceDomain;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
