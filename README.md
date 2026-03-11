@@ -88,9 +88,9 @@ GET /bcnc-test/prices?brandId=1&productId=35455&date=2020-06-14T10:00:00
 
 The project follows a hexagonal architecture, which separates the application's core logic from the infrastructure details.
 
--   `domain`: Contains the core business logic, including the `Price` model and the `PriceService` interface.
--   `application`: Contains the application layer, including the `PriceController`, DTOs, and mappers.
--   `infrastructure`: Contains the infrastructure layer, including the database entities, repositories, and mappers.
+-   `domain`: Contains the core business model.
+-   `application`: Contains the application layer, including DTOs, service and mappers.
+-   `infrastructure`: Contains the infrastructure layer, including the database entities, repositories, controller, and mappers.
 
 ## Code Formatting
 
