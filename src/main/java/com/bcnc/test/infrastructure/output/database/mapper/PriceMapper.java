@@ -1,7 +1,7 @@
-package com.bcnc.test.infrastructure.mapper;
+package com.bcnc.test.infrastructure.output.database.mapper;
 
 import com.bcnc.test.domain.model.PriceDomain;
-import com.bcnc.test.infrastructure.entity.PriceEntity;
+import com.bcnc.test.infrastructure.output.database.entity.PriceEntity;
 import org.mapstruct.Mapper;
 
 /**
@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  *
  * <p>This mapper is used to convert the database entity to the internal domain model.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = BrandMapper.class)
 public interface PriceMapper {
 
   /**

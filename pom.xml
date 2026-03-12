@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.bcnc.test</groupId>
     <artifactId>bcnc-test</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>bcnc-test</name>
     <description>BCNC Code Test</description>
     <properties>

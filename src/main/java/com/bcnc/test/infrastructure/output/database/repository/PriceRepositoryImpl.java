@@ -1,9 +1,9 @@
-package com.bcnc.test.infrastructure.repository;
+package com.bcnc.test.infrastructure.output.database.repository;
 
-import com.bcnc.test.application.repository.PriceRepository;
 import com.bcnc.test.domain.model.PriceDomain;
-import com.bcnc.test.infrastructure.mapper.PriceMapper;
-import com.bcnc.test.infrastructure.repository.jpa.JpaPriceRepository;
+import com.bcnc.test.domain.repository.PriceRepository;
+import com.bcnc.test.infrastructure.output.database.mapper.PriceMapper;
+import com.bcnc.test.infrastructure.output.database.repository.jpa.JpaPriceRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -30,15 +30,16 @@ public class PriceRepositoryImpl implements PriceRepository {
    *
    * @param brandId The identifier of the brand.
    * @param productId The identifier of the product.
-   * @param date The date for which to find the applicable price.
+   * @param applicationDate The date for which to find the applicable price.
    * @return An {@link Optional} containing the applicable {@link PriceDomain}, or an empty {@link
    *     Optional} if no price is found.
    */
   @Override
-  public Optional<PriceDomain> findPrice(Integer brandId, Integer productId, LocalDateTime date) {
+  public Optional<PriceDomain> findPrice(
+      Long brandId, Integer productId, LocalDateTime applicationDate) {
     return jpaPriceRepository
         .findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-            brandId, productId, date, date)
+            brandId, productId, applicationDate, applicationDate)
         .map(priceMapper::toDomain);
   }
 }

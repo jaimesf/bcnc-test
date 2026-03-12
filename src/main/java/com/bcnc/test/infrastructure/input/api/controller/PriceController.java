@@ -1,8 +1,8 @@
-package com.bcnc.test.infrastructure.api.controller;
+package com.bcnc.test.infrastructure.input.api.controller;
 
-import com.bcnc.test.application.service.PriceService;
-import com.bcnc.test.infrastructure.api.mapper.PriceResponseMapper;
-import com.bcnc.test.infrastructure.api.model.response.PriceResponse;
+import com.bcnc.test.domain.service.PriceService;
+import com.bcnc.test.infrastructure.input.api.mapper.PriceResponseMapper;
+import com.bcnc.test.infrastructure.input.api.model.response.PriceResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,18 +13,12 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * REST controller for retrieving price information.
- *
- * <p>This controller exposes an endpoint to find the applicable price for a product based on the
- * brand, product, and a specific date.
- */
+/** REST controller for retrieving price information. */
 @Slf4j
 @RestController
 @RequestMapping("/prices")
@@ -39,9 +33,9 @@ public class PriceController {
    *
    * @param brandId The identifier of the brand.
    * @param productId The identifier of the product.
-   * @param date The date for which to find the applicable price, in ISO DATE_TIME format.
-   * @return A {@link ResponseEntity} containing the {@link PriceResponse} if a price is found, or a
-   *     404 Not Found response otherwise.
+   * @param applicationDate The date for which to find the applicable price, in ISO DATE_TIME
+   *     format.
+   * @return A {@link PriceResponse} if a price is found.
    */
   @Operation(
       summary = "Find applicable price",
@@ -59,22 +53,23 @@ public class PriceController {
         @ApiResponse(responseCode = "404", description = "Price not found", content = @Content)
       })
   @GetMapping
-  public ResponseEntity<PriceResponse> getPrice(
-      @Parameter(description = "ID of the brand", example = "1") @RequestParam Integer brandId,
-      @Parameter(description = "ID of the product", example = "35455") @RequestParam
+  public PriceResponse getPrice(
+      @Parameter(description = "ID of the brand", example = "1") @RequestParam("brand-id")
+          Long brandId,
+      @Parameter(description = "ID of the product", example = "35455") @RequestParam("product-id")
           Integer productId,
       @Parameter(
               description = "Date to check for the price in ISO DATE_TIME format",
               example = "2020-06-14T10:00:00")
-          @RequestParam
+          @RequestParam("application-date")
           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-          LocalDateTime date) {
+          LocalDateTime applicationDate) {
     log.debug(
-        "Request received for brandId: {}, productId: {}, date: {}", brandId, productId, date);
-    return priceService
-        .findPrice(brandId, productId, date)
-        .map(priceResponseMapper::toResponse)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+        "Request received for brandId: {}, productId: {}, date: {}",
+        brandId,
+        productId,
+        applicationDate);
+    return priceResponseMapper.toResponse(
+        priceService.findPrice(brandId, productId, applicationDate));
   }
 }

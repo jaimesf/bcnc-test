@@ -1,13 +1,15 @@
-package com.bcnc.test.infrastructure.repository;
+package com.bcnc.test.infrastructure.output.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.bcnc.test.domain.model.BrandDomain;
 import com.bcnc.test.domain.model.PriceDomain;
-import com.bcnc.test.infrastructure.entity.PriceEntity;
-import com.bcnc.test.infrastructure.mapper.PriceMapper;
-import com.bcnc.test.infrastructure.repository.jpa.JpaPriceRepository;
+import com.bcnc.test.infrastructure.output.database.entity.PriceEntity;
+import com.bcnc.test.infrastructure.output.database.mapper.PriceMapper;
+import com.bcnc.test.infrastructure.output.database.repository.PriceRepositoryImpl;
+import com.bcnc.test.infrastructure.output.database.repository.jpa.JpaPriceRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -29,12 +31,13 @@ class PriceRepositoryImplTest {
   @Test
   @DisplayName("Should return a price when found")
   void testFindPrice() {
-    Integer brandId = 1;
+    Long brandId = 1L;
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
     PriceEntity priceEntity = new PriceEntity();
+    BrandDomain brandDomain = new BrandDomain(brandId, "ZARA");
     PriceDomain priceDomain =
-        new PriceDomain(1L, brandId, date, date, 1, productId, 1, 35.50, "EUR");
+        new PriceDomain(1L, brandDomain, date, date, 1, productId, 1, 35.50, "EUR");
 
     when(jpaPriceRepository
             .findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
@@ -46,14 +49,14 @@ class PriceRepositoryImplTest {
 
     assertTrue(result.isPresent());
     assertEquals(priceDomain, result.get());
-    assertEquals(brandId, result.get().brandId());
+    assertEquals(brandId, result.get().brand().id());
     assertEquals(productId, result.get().productId());
   }
 
   @Test
   @DisplayName("Should return an empty optional when price is not found")
   void testFindPrice_whenNotFound() {
-    Integer brandId = 1;
+    Long brandId = 1L;
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
 
