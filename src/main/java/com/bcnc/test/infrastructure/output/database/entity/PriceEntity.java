@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Represents a price record in the database.
@@ -18,7 +19,8 @@ import lombok.Data;
 @Entity
 @Table(name = "PRICES")
 @Data
-public class PriceEntity {
+@EqualsAndHashCode(callSuper = true)
+public class PriceEntity extends AuditableEntity {
 
   /** The unique identifier of the price record. */
   @Id
