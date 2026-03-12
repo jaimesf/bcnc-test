@@ -1,4 +1,4 @@
-package com.bcnc.test.infrastructure.api.model.response;
+package com.bcnc.test.infrastructure.input.api.model.response;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  */
 public record PriceResponse(
     Integer productId,
-    Integer brandId,
+    Long brandId,
     Integer priceList,
     LocalDateTime startDate,
     LocalDateTime endDate,

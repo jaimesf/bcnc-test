@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * validity dates, priority, and currency.
  *
  * @param id The unique identifier of the price record.
- * @param brandId The identifier of the brand associated with this price.
+ * @param brand The brand associated with this price.
  * @param startDate The start date and time from which this price is valid.
  * @param endDate The end date and time until which this price is valid.
  * @param priceList The price list associated with this price.
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  */
 public record PriceDomain(
     Long id,
-    Integer brandId,
+    BrandDomain brand,
     LocalDateTime startDate,
     LocalDateTime endDate,
     Integer priceList,

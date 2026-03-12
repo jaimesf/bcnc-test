@@ -1,9 +1,10 @@
 package com.bcnc.test.application.service;
 
-import com.bcnc.test.application.repository.PriceRepository;
+import com.bcnc.test.domain.exception.PriceNotFoundException;
 import com.bcnc.test.domain.model.PriceDomain;
+import com.bcnc.test.domain.repository.PriceRepository;
+import com.bcnc.test.domain.service.PriceService;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,19 @@ public class PriceServiceImpl implements PriceService {
    *
    * @param brandId The identifier of the brand.
    * @param productId The identifier of the product.
-   * @param date The date for which to find the applicable price.
-   * @return An {@link Optional} containing the applicable {@link PriceDomain}, or an empty {@link
-   *     Optional} if no price is found.
+   * @param applicationDate The date for which to find the applicable price.
+   * @return The applicable {@link PriceDomain}.
+   * @throws PriceNotFoundException if no price is found for the given criteria.
    */
   @Override
-  public Optional<PriceDomain> findPrice(Integer brandId, Integer productId, LocalDateTime date) {
-    return priceRepository.findPrice(brandId, productId, date);
+  public PriceDomain findPrice(Long brandId, Integer productId, LocalDateTime applicationDate) {
+    return priceRepository
+        .findPrice(brandId, productId, applicationDate)
+        .orElseThrow(
+            () ->
+                new PriceNotFoundException(
+                    String.format(
+                        "No price found for brand %d, product %d, and date %s",
+                        brandId, productId, applicationDate)));
   }
 }

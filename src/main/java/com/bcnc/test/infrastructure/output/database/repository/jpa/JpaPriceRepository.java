@@ -1,6 +1,6 @@
-package com.bcnc.test.infrastructure.repository.jpa;
+package com.bcnc.test.infrastructure.output.database.repository.jpa;
 
-import com.bcnc.test.infrastructure.entity.PriceEntity;
+import com.bcnc.test.infrastructure.output.database.entity.PriceEntity;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +21,5 @@ public interface JpaPriceRepository extends JpaRepository<PriceEntity, Long> {
    */
   Optional<PriceEntity>
       findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-          Integer brandId, Integer productId, LocalDateTime startDate, LocalDateTime endDate);
+          Long brandId, Integer productId, LocalDateTime startDate, LocalDateTime endDate);
 }

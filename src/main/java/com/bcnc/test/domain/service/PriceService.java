@@ -1,8 +1,8 @@
-package com.bcnc.test.application.service;
+package com.bcnc.test.domain.service;
 
+import com.bcnc.test.domain.exception.PriceNotFoundException;
 import com.bcnc.test.domain.model.PriceDomain;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /** Defines the contract for retrieving price information. */
 public interface PriceService {
@@ -15,9 +15,9 @@ public interface PriceService {
    *
    * @param brandId The identifier of the brand.
    * @param productId The identifier of the product.
-   * @param date The date for which to find the applicable price.
-   * @return An {@link Optional} containing the applicable {@link PriceDomain}, or an empty {@link
-   *     Optional} if no price is found.
+   * @param applicationDate The date for which to find the applicable price.
+   * @return The applicable {@link PriceDomain}.
+   * @throws PriceNotFoundException if no price is found for the given criteria.
    */
-  Optional<PriceDomain> findPrice(Integer brandId, Integer productId, LocalDateTime date);
+  PriceDomain findPrice(Long brandId, Integer productId, LocalDateTime applicationDate);
 }

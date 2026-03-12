@@ -1,4 +1,4 @@
-package com.bcnc.test.application.repository;
+package com.bcnc.test.domain.repository;
 
 import com.bcnc.test.domain.model.PriceDomain;
 import java.time.LocalDateTime;
@@ -15,9 +15,9 @@ public interface PriceRepository {
    *
    * @param brandId The identifier of the brand.
    * @param productId The identifier of the product.
-   * @param date The date for which to find the applicable price.
+   * @param applicationDate The date for which to find the applicable price.
    * @return An {@link Optional} containing the applicable {@link PriceDomain}, or an empty {@link
    *     Optional} if no price is found.
    */
-  Optional<PriceDomain> findPrice(Integer brandId, Integer productId, LocalDateTime date);
+  Optional<PriceDomain> findPrice(Long brandId, Integer productId, LocalDateTime applicationDate);
 }

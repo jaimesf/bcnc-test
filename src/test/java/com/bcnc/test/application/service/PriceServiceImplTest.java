@@ -1,11 +1,13 @@
 package com.bcnc.test.application.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.bcnc.test.application.repository.PriceRepository;
+import com.bcnc.test.domain.exception.PriceNotFoundException;
+import com.bcnc.test.domain.model.BrandDomain;
 import com.bcnc.test.domain.model.PriceDomain;
+import com.bcnc.test.domain.repository.PriceRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -27,32 +29,31 @@ class PriceServiceImplTest {
   @Test
   @DisplayName("Should return a price when found")
   void testFindPrice() {
-    Integer brandId = 1;
+    Long brandId = 1L;
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
+    BrandDomain brandDomain = new BrandDomain(brandId, "ZARA");
     PriceDomain priceDomain =
-        new PriceDomain(1L, brandId, date, date, 1, productId, 1, 35.50, "EUR");
+        new PriceDomain(1L, brandDomain, date, date, 1, productId, 1, 35.50, "EUR");
     when(priceRepository.findPrice(brandId, productId, date)).thenReturn(Optional.of(priceDomain));
 
-    Optional<PriceDomain> result = priceService.findPrice(brandId, productId, date);
+    PriceDomain result = priceService.findPrice(brandId, productId, date);
 
-    assertTrue(result.isPresent());
-    assertEquals(priceDomain, result.get());
-    assertEquals(brandId, result.get().brandId());
-    assertEquals(productId, result.get().productId());
+    assertEquals(priceDomain, result);
+    assertEquals(brandId, result.brand().id());
+    assertEquals(productId, result.productId());
   }
 
   /** Test find price when not found. */
   @Test
-  @DisplayName("Should return an empty optional when price is not found")
+  @DisplayName("Should throw PriceNotFoundException when price is not found")
   void testFindPrice_whenNotFound() {
-    Integer brandId = 1;
+    Long brandId = 1L;
     Integer productId = 35455;
     LocalDateTime date = LocalDateTime.now();
     when(priceRepository.findPrice(brandId, productId, date)).thenReturn(Optional.empty());
 
-    Optional<PriceDomain> result = priceService.findPrice(brandId, productId, date);
-
-    assertTrue(result.isEmpty());
+    assertThrows(
+        PriceNotFoundException.class, () -> priceService.findPrice(brandId, productId, date));
   }
 }
