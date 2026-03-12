@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "BRAND")
 @Getter
 @Setter
-public class BrandEntity {
+public class BrandEntity extends AuditableEntity {
 
   /** The unique identifier of the brand. */
   @Id

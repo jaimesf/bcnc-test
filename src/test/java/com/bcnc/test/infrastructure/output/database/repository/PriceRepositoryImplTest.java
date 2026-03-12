@@ -1,4 +1,4 @@
-package com.bcnc.test.infrastructure.output.repository;
+package com.bcnc.test.infrastructure.output.database.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,7 +8,6 @@ import com.bcnc.test.domain.model.BrandDomain;
 import com.bcnc.test.domain.model.PriceDomain;
 import com.bcnc.test.infrastructure.output.database.entity.PriceEntity;
 import com.bcnc.test.infrastructure.output.database.mapper.PriceMapper;
-import com.bcnc.test.infrastructure.output.database.repository.PriceRepositoryImpl;
 import com.bcnc.test.infrastructure.output.database.repository.jpa.JpaPriceRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
